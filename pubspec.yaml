@@ -1,0 +1,29 @@
+name: gemini_chat
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  liquid_swipe: ^3.1.0
+  flutter_svg: ^2.0.10+1
+  http: ^1.2.1
+  google_generative_ai: ^0.4.3
+
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - asset/image/
