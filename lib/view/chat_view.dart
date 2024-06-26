@@ -15,7 +15,7 @@ class _ChatViewState extends State<ChatView> {
   final List<Map<String, dynamic>> _chatHistory = [];
 
   void geminiRequest() async {
-    const apiKey = 'API-KEY-HERE';
+    const apiKey = 'Your API Key here';
     final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey);
 
     final content = <Content>[];
@@ -50,49 +50,54 @@ class _ChatViewState extends State<ChatView> {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height - 160,
-            child: ListView.builder(
-              itemCount: _chatHistory.length,
-              shrinkWrap: false,
-              controller: _scrollController,
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 10, bottom: 10),
-                  child: Align(
-                    alignment: (_chatHistory[index]["isSender"]
-                        ? Alignment.topRight
-                        : Alignment.topLeft),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await Future.delayed(const Duration(seconds: 1));
+              },
+              child: ListView.builder(
+                itemCount: _chatHistory.length,
+                shrinkWrap: false,
+                controller: _scrollController,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 10, bottom: 10),
+                    child: Align(
+                      alignment: (_chatHistory[index]["isSender"]
+                          ? Alignment.topRight
+                          : Alignment.topLeft),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          color: (_chatHistory[index]["isSender"]
+                              ? const Color(0xFFF69170)
+                              : Colors.white),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          _chatHistory[index]["message"],
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: _chatHistory[index]["isSender"]
+                                ? Colors.white
+                                : Colors.black,
                           ),
-                        ],
-                        color: (_chatHistory[index]["isSender"]
-                            ? const Color(0xFFF69170)
-                            : Colors.white),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        _chatHistory[index]["message"],
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: _chatHistory[index]["isSender"]
-                              ? Colors.white
-                              : Colors.black,
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           Align(
