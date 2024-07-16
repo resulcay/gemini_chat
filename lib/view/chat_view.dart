@@ -15,7 +15,7 @@ class _ChatViewState extends State<ChatView> {
   final List<Map<String, dynamic>> _chatHistory = [];
 
   void geminiRequest() async {
-    const apiKey = 'Your API Key here';
+    const apiKey = 'YOUR_API_KEY HERE';
     final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey);
 
     final content = <Content>[];
